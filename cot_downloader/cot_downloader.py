@@ -1,3 +1,4 @@
+from typing import Any
 from sodapy import Socrata
 from cot_downloader.constants import DOMAIN, DESC_ORDER, LEGACY_FUTUTRES_ONLY 
 
@@ -10,7 +11,7 @@ class COTDownloader:
         market_and_exchange_names: list[str], 
         limit: int = 1000, 
         order: str = DESC_ORDER
-    ) -> dict[str, list[list[str]]]:
+    ) -> dict[str, list[dict[str, Any]]]:
         """Connects to the Socrata API using the provided app token and retrieves COT
         data filtered by market and exchange names.
 
@@ -45,14 +46,19 @@ class COTDownloader:
                 The original exception is chained for debugging purposes.
         
         Example:
+            Download recent EURO FX reports:
+            
             >>> reports = COTDownloader.download(
-            ...     app_token="YOUR-API-TOKEN",
+            ...     app_token="XWFI5HyH7penFtCH2bDwNR1JV",
             ...     market_and_exchange_names=["EURO FX - CHICAGO MERCANTILE EXCHANGE"],
             ...     limit=5
             ... )
-            >>> for report in reports:
+            >>> 
+            >>> # Access reports for specific market
+            >>> euro_reports = reports["EURO FX - CHICAGO MERCANTILE EXCHANGE"]
+            >>> for report in euro_reports:
             ...     print(f"Date: {report.get('report_date_as_yyyy_mm_dd')}")
-            ...     print(f"Market: {report.get('market_and_exchange_names')}")
+            ...     print(f"Commercial Long: {report.get('commercial_long')}")
         """
         all_reports = {}
         if not market_and_exchange_names:
