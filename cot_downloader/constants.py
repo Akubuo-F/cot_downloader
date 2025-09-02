@@ -1,5 +1,5 @@
 DESC_ORDER = "report_date_as_yyyy_mm_dd DESC"
-ASC_ORDER = "report_date_as_yyyy_mm_dd DESC"
+ASC_ORDER = "report_date_as_yyyy_mm_dd ASC"
 LEGACY_FUTUTRES_ONLY = "6dca-aqww"
 LEGACY_COMBINED = "jun7-fc8e"
 DISAGGREGATED_FUTURES_ONLY = "72hh-3qpy"

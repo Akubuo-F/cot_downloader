@@ -20,7 +20,7 @@ class COTDownloader:
                 Required for API access. Get one from https://dev.socrata.com/
             market_and_exchange_names (list[str]): list of market and exchange names
                 to filter the results. Use exact names as they appear in the CFTC database.
-                Examples: ["EURO FX - CHICAGO MERCANTILE EXCHANGE", "CRUDE OIL, LIGHT SWEET - NEW YORK MERCANTILE EXCHANGE"]
+                Examples: ["EURO FX - CHICAGO MERCANTILE EXCHANGE", "AUSTRALIAN DOLLAR - CHICAGO MERCANTILE EXCHANGE"]
             limit (int, optional): Maximum number of records to retrieve per market. 
                 Defaults to 1000. API typically allows up to 50,000 records per request.
                 Consider pagination for larger datasets to avoid timeout issues.
@@ -41,6 +41,7 @@ class COTDownloader:
             Returns empty dictionary if no market names are provided.
         
         Raises:
+            ValueError: If market and exchange names list contains duplicates
             ConnectionError: When the API request fails due to network issues,
                 authentication problems, invalid parameters, or API errors.
                 The original exception is chained for debugging purposes.
@@ -49,7 +50,7 @@ class COTDownloader:
             Download recent EURO FX reports:
             
             >>> reports = COTDownloader.download(
-            ...     app_token="XWFI5HyH7penFtCH2bDwNR1JV",
+            ...     app_token="YOUR-APP-TOKEN",
             ...     market_and_exchange_names=["EURO FX - CHICAGO MERCANTILE EXCHANGE"],
             ...     limit=5
             ... )
@@ -61,8 +62,12 @@ class COTDownloader:
             ...     print(f"Commercial Long: {report.get('commercial_long')}")
         """
         all_reports = {}
+
         if not market_and_exchange_names:
             return all_reports
+        
+        if len(market_and_exchange_names) != len(set(market_and_exchange_names)):
+            raise ValueError("Market and exchange names list should not contain duplicates.")
         try:
             with Socrata(DOMAIN, app_token) as client:
                 for name in market_and_exchange_names:
