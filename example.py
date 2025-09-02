@@ -1,4 +1,4 @@
-from cot_downloader.cot_downloader import COTDownloader
+from cot_downloader import COTDownloader
 
 
 def example():
