@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cot-downloader"
+version = "0.1.0"
+description = "A Python package for downloading Commitment of Traders (COT) reports from CFTC"
+readme = "README.md"
+requires-python = ">=3.13"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Favour Chigoziri Akubuo", email = "akubuof.work@gmail.com"},
+]
+keywords = ["cot", "cftc", "trading", "commodities", "futures"]
+dependencies = [
+    "sodapy>=2.2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Akubuo-F/cot_downloader"
+Repository = "https://github.com/Akubuo-F/cot_downloader"
+Issues = "https://github.com/Akubuo-F/cot_downloader/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["cot_downloader"]
